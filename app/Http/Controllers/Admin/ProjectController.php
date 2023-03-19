@@ -5,11 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Project;
 use App\Models\Type;
 use App\Models\Technology;
+use App\Models\Userform;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserPubblicationMail;
+use App\Mail\UserNotifyProjectMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
+
 
 class ProjectController extends Controller
 {
@@ -172,8 +177,16 @@ class ProjectController extends Controller
         $project->is_published=!$project->is_published;
         $action=$project->is_published ? "Pubblicato" : "Messo in Bozza";
         $project->save();
-        return to_route("admin.projects.index")->with("type","success")->with("msg","Il Progetto è stato $action con successo");
-    }
+        $users = Userform::where('newsletter', true)->get();
+        foreach ($users as $user) {
+            if ($project->is_published) {
+                $email = new UserNotifyProjectMail;
+                Mail::to($user->email)->send($email); 
+            }
+       
+    } 
+    return to_route("admin.projects.index")->with("type","success")->with("msg","Il Progetto è stato $action con successo");
+}
 
     public function trash(){
         $projects=Project::onlyTrashed()->get();
