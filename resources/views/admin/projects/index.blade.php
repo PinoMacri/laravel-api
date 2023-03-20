@@ -30,6 +30,16 @@
     </div>
 @endif
 
+@if (session()->has('success'))
+    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
+
+
+
 
 @foreach ($projects as $project)
 <div class="alert text-center alert-success alert-dismissible fade show" role="alert" style="display:none;" id="create-success-alert">
@@ -48,7 +58,27 @@
       </div>
       <div class="d-flex">
        
-        <form action="{{route("admin.projects.index")}}" method="GET" class="d-flex align-items-center my-filtered">
+        <form action="{{route("admin.projects.index")}}" method="GET" class="mb-0 d-flex align-items-center my-filtered">
+          <div class="dropdown">
+            <button id="technology-dropdown-btn" class="btn btn-secondary dropdown-toggle me-3" type="button" id="technology-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Seleziona le Tecnologie
+            </button>            
+            <div class="dropdown-menu" aria-labelledby="technology-dropdown">
+              @foreach ($technologies as $technology)
+                <div class="form-check dropdown-item text-center">
+                  <input class="form-check-input tech ms-2" type="checkbox" name="technologies[]" value="{{ $technology->id }}" id="technology-{{$loop->iteration}}"  {{ in_array($technology->id, $selected_technologies) ? 'checked' : '' }}>
+                  <label class="form-check-label dropdown-link"  for="technology-{{$loop->iteration}}">
+                    {{ $technology->label }}
+                  </label>
+                </div>
+              @endforeach
+            </div>
+          </div>
+          
+          
+          
+
+
         <select class="form-select me-3" name="type_filter" id="type_filter">
           <option value="">Tutti i Tipi</option>
           @foreach($types as $type)
@@ -88,9 +118,9 @@
            @forelse ($projects as $project)
            <tr>
             <th class="my-id" scope="row">{{$project->id}}</th>
-            <td>{{ Str::limit($project->title, 20)}}</td>
+            <td id="titolos">{{ Str::limit($project->title, 20)}}</td>
             <td><p class="badge rounded-pill text-center" style="background-color: {{$project->type?->color}}">{{$project->type?->label}}</p></td>
-            <td>
+            <td id="tecnologie">
               @forelse($project->technologies as $technology)
               <span class="badge rounded-pill text-dark" style="background-color: {{$technology->color}}">{{$technology->label}}</span>
               @empty
@@ -100,7 +130,7 @@
             <td>{{ Str::limit($project->description, 10)}}</td>
             <td>{{ Str::limit($project->github, 10)}}</td>
             <td>
-              <form action="{{route("admin.projects.toggle", $project->id)}}" method="POST">
+              <form action="{{route("admin.projects.toggle", $project->id)}}" method="POST" class="mb-0">
               @method("PATCH")
               @csrf
               <button type="submit" class="btn btn-outline">
@@ -137,19 +167,9 @@
 
 @section("scripts")
 <script>
-  const deleteForms=document.querySelectorAll(".delete-form");
-  deleteForms.forEach(form=>{
-    form.addEventListener("submit", (event)=>{
-      event.preventDefault();
-      const title=form.getAttribute("data-project");
-      const confirm = window.confirm(`Sei sicuro di voler eliminare il progetto ${title}?`);
-      if (confirm) form.submit();
-    })
-  });
+ 
 </script>
-@if (session()->has('success'))
-    <script>
-        document.getElementById('create-success-alert').style.display = 'block';
-    </script>
-@endif
-@endsection
+
+
+
+  

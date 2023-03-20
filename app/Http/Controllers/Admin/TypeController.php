@@ -13,7 +13,8 @@ class TypeController extends Controller
      */
     public function index()
     {
-        //
+        $types=Type::all();
+        return view ("admin.types.index", compact("types"));
     }
 
     /**
@@ -21,7 +22,8 @@ class TypeController extends Controller
      */
     public function create()
     {
-        //
+        $type = new Type();
+        return view("admin.types.create", compact("type"));
     }
 
     /**
@@ -29,7 +31,11 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $type=new Type();
+        $type->fill($data);
+        $type->save();
+        return redirect()->route("admin.types.index");
     }
 
     /**
@@ -43,24 +49,30 @@ class TypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Type $type)
     {
-        //
+        $types=Type::all();
+        $type->pluck("id")->toArray();
+        return view ("admin.types.edit", compact("type"));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Type $type)
     {
-        //
+        $data = $request->all();
+        $type->update($data);
+        $type->save();
+        return redirect()->route("admin.types.index");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Type $type)
     {
-        //
+        $type->delete();
+        return redirect()->route("admin.types.index")->with("delete", "Il Tipo $type->label è stato eliminato");
     }
 }

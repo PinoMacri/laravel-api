@@ -13,7 +13,8 @@ class TechnologyController extends Controller
      */
     public function index()
     {
-        //
+        $technologies=Technology::all();
+        return view ("admin.technologies.index", compact("technologies"));
     }
 
     /**
@@ -21,7 +22,8 @@ class TechnologyController extends Controller
      */
     public function create()
     {
-        //
+        $technology = new Technology();
+        return view("admin.technologies.create", compact("technology"));
     }
 
     /**
@@ -29,7 +31,11 @@ class TechnologyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $technology=new Technology();
+        $technology->fill($data);
+        $technology->save();
+        return redirect()->route("admin.technologies.index");
     }
 
     /**
@@ -45,7 +51,9 @@ class TechnologyController extends Controller
      */
     public function edit(Technology $technology)
     {
-        //
+        $technologies=Technology::all();
+        $technology->pluck("id")->toArray();
+        return view ("admin.technologies.edit", compact("technology"));
     }
 
     /**
@@ -53,7 +61,10 @@ class TechnologyController extends Controller
      */
     public function update(Request $request, Technology $technology)
     {
-        //
+        $data = $request->all();
+        $technology->update($data);
+        $technology->save();
+        return redirect()->route("admin.technologies.index");
     }
 
     /**
@@ -61,6 +72,7 @@ class TechnologyController extends Controller
      */
     public function destroy(Technology $technology)
     {
-        //
+        $technology->delete();
+        return redirect()->route("admin.technologies.index")->with("delete", "Il Tipo $technology->label è stato eliminato");
     }
 }

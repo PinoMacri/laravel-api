@@ -14,19 +14,29 @@
 
 <header>
     <div class="container">
-        <h1 class="my-5">
+        <div class="my-show">
+         <div>
+            <div class="my-img-show float-start me-4">
+                <img class="img-fluid" src="{{asset("storage/" . $project->image)}}" alt="" >
+            </div>
+         <h1 class="my-5 text-white">
             {{$project->title}}
         </h1>
-        <p>
+        <p class="text-white">
             {{$project->description}}
         </p>
+    </div>
 
-         <a href="{{$project->github}}" target="_blank">Link Progetto a GitHub</a>
-         <a href="{{route("admin.projects.index")}}" class="d-block">Ritorna ai Progetti</a>
-         <img src="{{asset("storage/" . $project->image)}}" alt="">
+        </div>
+        <div class="d-flex justify-content-end">
+            <a href="{{$project->github}}" class="btn btn-success" target="_blank">Link Progetto a GitHub</a>
+        </div>
         
-         <div>
+         <div class="text-white">
             <strong>Stato:</strong> {{$project->is_published ? "Pubblicato" : "Bozza"}}
+            <br>
+         <a href="{{route("admin.projects.index")}}" class="mt-3 btn btn-primary">Ritorna ai Progetti</a>
+
         </div>
 
        

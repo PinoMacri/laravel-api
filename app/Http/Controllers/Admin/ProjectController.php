@@ -25,6 +25,7 @@ class ProjectController extends Controller
     {
         $status_filter = $request->query("status_filter");
         $type_filter = $request->query("type_filter");
+        $selected_technologies = $request->input('technologies', []);
         $query = Project::orderBy("updated_at", "DESC");
         $search=$request->query("search");
 
@@ -36,15 +37,26 @@ class ProjectController extends Controller
         if ($type_filter) {
             $query->where("type_id", $type_filter);
         }
+        
+        if (count($selected_technologies)) {
+            $query->whereHas('technologies', function ($q) use ($selected_technologies) {
+                $q->whereIn('technologies.id', $selected_technologies);
+            }, '=', count($selected_technologies));
+        }
+        
+        
+        
+        
 
         if($search){
             $query->where("title","LIKE","%$search%");
         }
         
-        $projects = $query->paginate(10);
+        $projects = $query->paginate(15);
         $types = Type::all();
+        $technologies = Technology::all();
         
-        return view("admin.projects.index", compact("projects", "types", "status_filter", "type_filter", "search"));
+        return view("admin.projects.index", compact("projects", "types", "technologies", "status_filter", "type_filter", "search", 'selected_technologies'));
     }
     
 
@@ -95,7 +107,8 @@ class ProjectController extends Controller
         $project->save();
         if (Arr::exists($data,"technologies")) $project->technologies()->attach($data["technologies"]);
         session()->flash('success', 'Creazione avvenuta con successo!');
-        return redirect()->route("admin.projects.index");
+        return redirect()->route('admin.projects.index')->with('success', 'Il progetto è stato creato con successo.');
+
 
     }
 

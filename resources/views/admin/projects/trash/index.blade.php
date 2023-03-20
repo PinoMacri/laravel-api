@@ -16,16 +16,11 @@
 
 
 <header id="myIndex-delete">
-<div class="container">
+<div class="container mt-5">
    
-   <a href="{{route("admin.projects.index")}}">Torna ai Progetti</a>
-   <form class="" action="{{route("admin.projects.trash.dropAll")}}" method="POST">
-@csrf
-@method("DELETE")
-<button class="btn btn-danger deletes-form">Svuota Cestino</button>
-
-</form>
-    <table class="table table-dark table-striped-columns">
+  <a href="{{route("admin.projects.index")}}" class="btn btn-primary mb-4">Torna ai Progetti</a>
+   
+    <table class="table table-dark table-striped-columns table-soft">
       <thead>
         <tr>
           <th class="my-th" scope="col">ID</th>
@@ -63,18 +58,18 @@
            </form>
          </td>
 
-          <td class="text-center">
-            <form class="delete-form d-inline" data-project="{{$project->title}}"  action="{{route("admin.projects.trash.drop", $project->id)}}" method="POST">
+          <td class="">
+            <form class="delete-form d-inline pe-2" data-project="{{$project->title}}"  action="{{route("admin.projects.trash.drop", $project->id)}}" method="POST">
                 @csrf
                 @method("DELETE")
                 <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i>
                 </button>
               </form>
    
-            <form action="{{route("admin.projects.trash.restore", $project->id)}}" method="POST">
+            <form action="{{route("admin.projects.trash.restore", $project->id)}}" method="POST" class="d-inline">
                 @csrf
                 @method("PATCH")
-                <button>Ripristina</button>
+                <button class="btn btn-success"><i class="fa-solid fa-arrows-rotate"></i></button>
             </form>
         </td>
 
@@ -87,7 +82,12 @@
         @endforelse
        </tbody>
     </table>
-
+    <form class="d-flex justify-content-end" action="{{route("admin.projects.trash.dropAll")}}" method="POST">
+ @csrf
+ @method("DELETE")
+ <button class="btn btn-danger deletes-form">Svuota Cestino</button>
+ 
+ </form>
 </div>
 </header>
 @endsection

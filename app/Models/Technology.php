@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Technology extends Model
 {
-    use SoftDeletes;
+ 
+    protected $fillable=["label","color"];
 
     protected $dates = ['deleted_at'];
     use HasFactory;

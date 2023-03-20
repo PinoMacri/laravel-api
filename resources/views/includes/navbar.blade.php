@@ -3,7 +3,7 @@
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
                     <div class="logo_laravel">
-                        Boolfolio
+                        Home
                     </div>
                     {{-- config('app.name', 'Laravel') --}}
                 </a>
@@ -16,12 +16,19 @@
                     <!-- Left Side Of Navbar -->
                     
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
+                      <!--  <li class="nav-item">
                             <a class="nav-link @if(Route::is("guest.home")) active @endif" href="{{route('guest.home') }}">{{ __('Home') }}</a>
                         </li>
+                    -->
                         @auth
                         <li class="nav-item">
                             <a class="nav-link @if(Route::is("admin.projects.index")) active @endif" href="{{route('admin.projects.index') }}">{{ __('Projects') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if(Route::is("admin.types.index")) active @endif" href="{{route('admin.types.index') }}">{{ __('Types') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if(Route::is("admin.technologies.index")) active @endif" href="{{route('admin.technologies.index') }}">{{ __('Technologies') }}</a>
                         </li>
                         @endauth
                     </ul>

@@ -3,15 +3,37 @@
 
     tr {
         border-bottom: 1px solid rgb(136, 113, 10);
+        height: 10px;
+
+
+
+        th {
+            height: 10px;
+            padding: 5px;
+
+            text-align: center;
+            vertical-align: middle;
+        }
 
         td {
-            padding: 10px 10px;
-            line-height: 41px;
+
+            height: 10px;
+            padding: 5px;
+            text-align: center;
+            vertical-align: middle;
+
 
             p {
-                border-radius: 20px;
+                margin: 0px;
             }
+
+
         }
+    }
+
+    #tecnologie,
+    #titolos {
+        text-align: left;
     }
 
     .my-th {
@@ -21,7 +43,7 @@
     }
 
     .my-id {
-        line-height: 41px;
+
         text-align: center;
     }
 }
@@ -78,5 +100,71 @@
     #titolo {
         font-size: 18px;
         left: -80px;
+    }
+}
+
+.tech {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.table-soft {
+    border: 3px solid red;
+    margin-bottom: 300px;
+
+    td,
+    th {
+        text-align: center;
+        vertical-align: middle;
+        height: 10px;
+
+        p {
+            margin: 0px;
+        }
+    }
+
+    th {
+        color: red !important;
+    }
+}
+
+
+.navbar {
+    background: linear-gradient(-45deg, #ffffff, #cfc8ca, #ffffff, #c1cac8);
+    background-size: 400% 400%;
+    animation: gradients 15s ease infinite;
+    border: 3px solid goldenrod;
+
+    li {
+        a {
+            font-weight: bold;
+        }
+    }
+}
+
+@keyframes gradients {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.jumbotron {
+    height: 80vh;
+
+    div {
+        text-align: center;
+        margin-top: 100px;
+
+        img {
+            width: 800px
+        }
     }
 }

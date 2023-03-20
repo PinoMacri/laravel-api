@@ -30,7 +30,7 @@
             <div>
                 <p class="small text-white">
                     {!! __('Stai vedendo') !!}
-                    <span class="fw-semibold">10 Progetti</span>
+                    <span class="fw-semibold">15 Progetti</span>
                     
                   
                     {!! __('su') !!}

@@ -1,7 +1,23 @@
 #myCreate {
 
-    .img-create {
-        width: 200px;
+    .img-edit {
+        width: 100px;
         height: auto;
+    }
+
+}
+
+#my-create-types {
+    margin-top: 100px;
+    margin-bottom: 300px;
+
+    label {
+        color: white;
+        font-weight: bold;
+    }
+
+    #color {
+        width: 250px;
+        height: 100px;
     }
 }

@@ -8,10 +8,14 @@
     <form action="{{route ("admin.projects.update", $project->id)}}" method="POST" enctype="multipart/form-data">
     @csrf
     @method("PUT")
+    <div class="d-flex justify-content-end">
+      <a href="{{route("admin.projects.index")}}" class="btn btn-primary">Ritorna ai Progetti</a>
+    </div>
+
     <!-- Titolo -->
     <div class="d-flex">
-    <div class="col-md-6">
-        <label for="title" class="form-label">Titolo</label>
+    <div class="col-md-6 me-3 pb-4">
+        <label for="title" class="form-label text-white">Titolo</label>
         <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title', $project->title) }}">
       @if($errors->has("title"))
       <ul class="alert list-unstyled alert-danger m-0  d-flex flex-column justify-content-center">
@@ -23,7 +27,7 @@
       </div>
       <!-- Tipo -->
       <div>
-      <label for="type_id" class="form-label">Tipi</label>
+      <label for="type_id" class="form-label text-white">Tipi</label>
       <select class="form-select" name="type_id" id="type_id">
       <option value="">Nessun Tipo</option>
       @foreach($types as $type)
@@ -40,8 +44,8 @@
       </div>        
     </div>
       <!-- GIT Hub -->
-      <div class="col-md-6">
-        <label for="github" class="form-label">Link GIT-Hub</label>
+      <div class="col-md-6 pb-4">
+        <label for="github" class="form-label text-white">Link GIT-Hub</label>
         <input type="text" class="form-control  @error('github') is-invalid @enderror" id="github" name="github"  value="{{ old('github', $project->github) }}">
         @if($errors->has("github"))
       <ul class="alert list-unstyled alert-danger ps-2 d-flex flex-column justify-content-center">
@@ -52,8 +56,8 @@
       @endif
       </div>
       <!-- Descrizione -->
-      <div class="col-12">
-        <label for="description" class="form-label">Descrizione</label>
+      <div class="col-12 pb-4">
+        <label for="description" class="form-label text-white">Descrizione</label>
         <textarea class="form-control @error('description')is-invalid @enderror" name="description" id="description" cols="173" rows="3"> {{old('description', $project->description)}}</textarea>
         @if($errors->has("description"))
         <ul class="alert list-unstyled alert-danger ps-2 d-flex flex-column justify-content-center">
@@ -64,22 +68,28 @@
           @endif
       </div>
       <!-- Immagine -->
-      <div class="col-md-6 mb-3">
-          <label for="image" class="form-label">Immagine</label>
-          <div class="d-flex justify-content-between align-items-center">
+      <div class="col-md-12 mb-4 mt-3">
+          <div class="d-flex justify-content-between align-items-center pb-4">
             <div>
+          <label for="image" class="form-label text-white">Immagine</label>
               <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" >
-            @if($errors->has("image"))
+            </div>
+              @if($errors->has("image"))
             <ul class="alert list-unstyled alert-danger ps-2 d-flex flex-column justify-content-center">
               @foreach ($errors->get('image') as $error)
                   <li class="m-0">{{ $error }}</li>
               @endforeach
               </ul>
               @endif
+              <div class="col-md-1">
+                <img class="img-edit" id="img-preview"
+                src="{{$project->image?asset("storage/" . $project->image) : "https://marcolanci.it/utils/placeholder.jpg"}}" alt="">
+              </div>
             </div>
+          
           <!-- Tecnologie -->
             <div>
-              <h4 class="text-white">Tecnhologies</h4>
+              <h4 class="text-white mb-3">Tecnologie</h4>
               @foreach ($technologies as $technology)
               <div class="form-check form-check-inline text-white">
                 <input class="form-check-input" type="checkbox" id="technology-{{$loop->iteration}}" value="{{$technology->id}}" name="technologies[]"
@@ -90,18 +100,14 @@
               @error("technologies")
               <small class="text-danger">{{$message}}</small>
               @enderror
-            <div class="col-md-1">
-              <img class="img-edit" id="img-preview"
-              src="{{$project->image?asset("storage/" . $project->image) : "https://marcolanci.it/utils/placeholder.jpg"}}" alt="">
-            </div>
+            
           </div>
         
           
       </div>
       <!-- Bottone -->
-      <div class="col-12">
+      <div class="col-12 d-flex justify-content-between">
         <button type="submit" class="btn btn-warning">Modifica</button>
-        <a href="{{route("admin.projects.index")}}" class="d-block">Ritorna ai Progetti</a>
       </div>
     </form> 
 </div>
